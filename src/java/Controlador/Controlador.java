@@ -8,6 +8,8 @@ import Modelo.Cliente;
 import Modelo.ClienteDAO;
 import Modelo.Empleado;
 import Modelo.EmpleadoDAO;
+import Modelo.Producto;
+import Modelo.ProductoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class Controlador extends HttpServlet {
     Empleado empleado = new Empleado();
     ClienteDAO clienteDao = new ClienteDAO();
     Cliente cliente = new Cliente();
+    ProductoDAO productoDAO = new ProductoDAO();
+    Producto producto = new Producto();
     int idempleado;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -97,6 +101,11 @@ public class Controlador extends HttpServlet {
                      cliente = clienteDao.listarCliente(dni);
                      request.setAttribute("cliente", cliente);
                      break;
+                 case "BuscarProducto":
+                     int codigoProducto = Integer.parseInt(request.getParameter("codigoProducto"));
+                     producto = productoDAO.buscarProducto(codigoProducto);
+                     request.setAttribute("producto", producto);
+                     break;                     
                  default:
                      request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
              }
