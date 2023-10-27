@@ -15,7 +15,7 @@
     <body>
         <div class="d-flex">
             <div class="card col-sm-5">
-                <form action="Controlador" method="post">
+                <form action="Controlador?menu=NuevaVenta" method="post">
                     <div class="card-body">
                         <div class="form-group">
                             <label>Datos del Cliente</label>
@@ -26,7 +26,7 @@
                                 <input type="submit" name="accion" value="Buscar"  class="btn btn-outline-info">  
                             </div>
                             <div class="col-sm-6">
-                                <input type="text" name="nombreCliente" placeholder="Datos Cliente" class="form-control">                
+                                <input type="text" value="${cliente.nombres}" name="nombreCliente" placeholder="Datos Cliente" class="form-control">                
                             </div>  
                         </div>  
                         <div class="form-group">

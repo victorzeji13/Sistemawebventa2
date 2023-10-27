@@ -4,6 +4,8 @@
  */
 package Controlador;
 
+import Modelo.Cliente;
+import Modelo.ClienteDAO;
 import Modelo.Empleado;
 import Modelo.EmpleadoDAO;
 import java.io.IOException;
@@ -23,6 +25,8 @@ public class Controlador extends HttpServlet {
 
     EmpleadoDAO empleadoDao = new EmpleadoDAO();
     Empleado empleado = new Empleado();
+    ClienteDAO clienteDao = new ClienteDAO();
+    Cliente cliente = new Cliente();
     int idempleado;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -87,6 +91,15 @@ public class Controlador extends HttpServlet {
              request.getRequestDispatcher("Producto.jsp").forward(request, response);
          }
          if(menu.equals("NuevaVenta")){
+             switch (accion) {
+                 case "Buscar":
+                     String dni = request.getParameter("codigoCliente");
+                     cliente = clienteDao.listarCliente(dni);
+                     request.setAttribute("cliente", cliente);
+                     break;
+                 default:
+                     request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
+             }
              request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
          }        
          
