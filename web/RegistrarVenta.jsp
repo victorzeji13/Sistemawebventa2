@@ -4,6 +4,7 @@
     Author     : Lenovo
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -62,7 +63,7 @@
                 <div class="card-body">
                     <div class="form-group col-sm-6 d-flex ml-auto">
                         <label>NumeroSerie</label>
-                        <input type="text" name="NroSerie" class="form-control">
+                        <input type="text" value="${numeroSerie}" name="NroSerie" class="form-control">
                     </div>
                     <br>
                     <table class="table table-hover">
@@ -78,21 +79,33 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <c:forEach var="listaventa" items="${listaventa}">
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>${listaventa.getItem()}</td>
+                                <td>${listaventa.getIdProducto()}</td>
+                                <td>${listaventa.getDescripcion()}</td>
+                                <td>${listaventa.getPrecio()}</td>
+                                <td>${listaventa.getCantidad()}</td>
+                                <td>${listaventa.getSubtotal()}</td>
+                                <td class="d-flex">
+                                    <a href="#" class="btn btn-warning">Editar</a>
+                                    <a href="#" class="btn btn-danger" style="margin-left: 10px">Eliminar</a>
+                                </td>
                             </tr>
+                        </c:forEach>
+                            
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer">
-                    <input type="submit" name="accion" value="GenerarVenta" class="btn btn-success">
-                    <input type="submit" name="accion" value="Cancelar" class="btn btn-danger">
+                <div class="card-footer d-flex">
+                    <div class ="col-sm-6">
+                       <input type="submit" name="accion" value="GenerarVenta" class="btn btn-success">
+                       <input type="submit" name="accion" value="Cancelar" class="btn btn-danger"> 
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" name="txtTotal" value="S/. ${totalPagar}" class="form-control">
+                    </div>
+                    
                 </div>
             </div>
 
