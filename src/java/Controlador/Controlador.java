@@ -43,7 +43,7 @@ public class Controlador extends HttpServlet {
     double subtotal;
     int idempleado;
     private double totalPagar;
-    String numeroSerie;
+    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -135,18 +135,15 @@ public class Controlador extends HttpServlet {
                          totalPagar = totalPagar + listaventa.get(i).getSubtotal();
                      }
                      request.setAttribute("totalPagar", totalPagar);
-                     request.setAttribute("listaventa", listaventa);
-                     
-                     
+                     request.setAttribute("listaventa", listaventa);                     
                      break;
                      
                  default:
-                    numeroSerie = ventaDAO.generarSerie();
-                    if(numeroSerie != null){
-                    int incrementar = Integer.parseInt(numeroSerie);
-                     numeroSerie = ventaDAO.convertirNumeroSerie(incrementar); 
+                    String numero_serie2 = ventaDAO.generarSerie();                
+                    int incrementar = Integer.parseInt(numero_serie2);
+                    String numeroSerie = ventaDAO.convertirNumeroSerie(incrementar); 
                     request.setAttribute("numeroSerie", numeroSerie);
-                            }
+                            
                     request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
              }
              request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
