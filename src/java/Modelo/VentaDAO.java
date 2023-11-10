@@ -12,25 +12,26 @@ public class VentaDAO {
   
     String numero;
     int dato;
-    public String generarSerie(){
+    public int generarSerie(){
         Conexion conexion = new Conexion();
         Connection conn;
         PreparedStatement pstmt;
         ResultSet rs;
-        String numeroSerie="";       
+        int numeroSerie = 0;       
         try {
             conn = conexion.getConnection();
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
-            while (rs.next()) {                
-                numeroSerie = rs.getString("NumeroSerie");                
+            while (rs.next()) {     
+                numeroSerie = rs.getInt(1);
             }
         } catch (Exception e) {
         }
+        
         return numeroSerie;
     }
      public String convertirNumeroSerie(int numeroSerie){
-       
+                       
        dato= numeroSerie+1;
         
        if((this.dato>=10000000)&&(this.dato<100000000)){

@@ -139,9 +139,8 @@ public class Controlador extends HttpServlet {
                      break;
                      
                  default:
-                    String numero_serie2 = ventaDAO.generarSerie();                
-                    int incrementar = Integer.parseInt(numero_serie2);
-                    String numeroSerie = ventaDAO.convertirNumeroSerie(incrementar); 
+                    int numero_serie2 = ventaDAO.generarSerie();              
+                    String numeroSerie = ventaDAO.convertirNumeroSerie(numero_serie2); 
                     request.setAttribute("numeroSerie", numeroSerie);
                             
                     request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
