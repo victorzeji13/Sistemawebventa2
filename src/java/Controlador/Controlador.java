@@ -14,12 +14,15 @@ import Modelo.Venta;
 import Modelo.VentaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  *
@@ -43,6 +46,8 @@ public class Controlador extends HttpServlet {
     double subtotal;
     int idempleado;
     private double totalPagar;
+    String numeroSerie;
+    int numero_serie2;
     
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -112,6 +117,7 @@ public class Controlador extends HttpServlet {
                      String dni = request.getParameter("codigoCliente");
                      cliente = clienteDao.listarCliente(dni);
                      request.setAttribute("cliente", cliente);
+                     request.setAttribute("numeroSerie", numeroSerie);
                      break;
                  case "BuscarProducto":
                      int codigoProducto = Integer.parseInt(request.getParameter("codigoProducto"));
@@ -119,6 +125,7 @@ public class Controlador extends HttpServlet {
                      request.setAttribute("producto", producto);
                      request.setAttribute("listaventa", listaventa);
                      request.setAttribute("cliente", cliente);
+                     request.setAttribute("numeroSerie", numeroSerie);
                      break;   
                  case "Agregar":
                      request.setAttribute("cliente", cliente);
@@ -135,12 +142,27 @@ public class Controlador extends HttpServlet {
                          totalPagar = totalPagar + listaventa.get(i).getSubtotal();
                      }
                      request.setAttribute("totalPagar", totalPagar);
-                     request.setAttribute("listaventa", listaventa);                     
+                     request.setAttribute("listaventa", listaventa);
+                     request.setAttribute("numeroSerie", numeroSerie);                     
                      break;
+                 case "GenerarVenta":
+                    // int idVenta = ventaDAO.generarIdventa();
+                     //int idClientev = cliente.getIdCliente();
+                     int idClientev = 18;
+                     int idEmpleado = 1;
+                     //String numeroSerie = request.getParameter("NroSerie"); numeroSerie
+                     Date fecha = new Date(2023, 11, 14);
+                     //double monto = Double.parseDouble(request.getParameter("txtTotal"));
+                        
+                     String numeroSerieact= Integer.toString(numero_serie2);
+                     String estado = "1";
+                     Venta venta = new Venta(idClientev, idEmpleado, numeroSerieact, fecha, totalPagar, estado);
+                     ventaDAO.guardarVenta(venta);
+                     break;                    
                      
                  default:
-                    int numero_serie2 = ventaDAO.generarSerie();              
-                    String numeroSerie = ventaDAO.convertirNumeroSerie(numero_serie2); 
+                    numero_serie2 = ventaDAO.generarSerie();              
+                    numeroSerie = ventaDAO.convertirNumeroSerie(numero_serie2); 
                     request.setAttribute("numeroSerie", numeroSerie);
                             
                     request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
