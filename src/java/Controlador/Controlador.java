@@ -150,20 +150,17 @@ public class Controlador extends HttpServlet {
                      int idEmpleado = 1;
                      //String numeroSerie = request.getParameter("NroSerie"); numeroSerie
                      Date fecha = new Date(123, 11, 14);                   
-                     String numeroSerieact= Integer.toString(abc);
+//                     String numeroSerieact= Integer.parseInt(numeroSerie);
                      String estado = "1";
-                     Venta venta = new Venta(idClientev, idEmpleado, numeroSerieact, fecha, totalPagar, estado);
+                     Venta venta = new Venta(idClientev, idEmpleado, numeroSerie, fecha, totalPagar, estado);
                      ventaDAO.guardarVenta(venta);                     
                      break;            
                  default:
                     //numero_serie2 = ventaDAO.generarSerie();
                      abc = ventaDAO.generarSerie();                    
                      numeroSerie = ventaDAO.convertirNumeroSerie(abc); 
-                     request.setAttribute("numeroSerie", numeroSerie); 
-                  
-                         
-                                                            
-                   request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
+                     request.setAttribute("numeroSerie", numeroSerie);                  
+                     request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
              }
              request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
          }        
