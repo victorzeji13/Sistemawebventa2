@@ -23,11 +23,12 @@ public class ClienteDAO {
             pstm.setString(1, dni);
             rs = pstm.executeQuery();
             while (rs.next()) {
+                int idCliente = rs.getInt("idCliente");
                 String dnicliente = rs.getString("Dni");
                 String nombre = rs.getString("Nombres");
                 String direccion = rs.getString("Direccion");
                 String estado = rs.getString("Estado");
-                cliente = new Cliente(dnicliente, nombre, direccion, estado);
+                cliente = new Cliente(idCliente, dnicliente, nombre, direccion, estado);
             }
         } catch (Exception e) {
         }

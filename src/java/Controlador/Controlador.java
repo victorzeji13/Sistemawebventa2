@@ -117,7 +117,7 @@ public class Controlador extends HttpServlet {
                      String dni = request.getParameter("codigoCliente");
                      cliente = clienteDao.listarCliente(dni);
                      request.setAttribute("cliente", cliente);
-                     request.setAttribute("numeroSerie", numeroSerie);
+                     request.setAttribute("numeroSerie", numeroSerie);                     
                      break;
                  case "BuscarProducto":
                      int codigoProducto = Integer.parseInt(request.getParameter("codigoProducto"));
@@ -145,27 +145,25 @@ public class Controlador extends HttpServlet {
                      request.setAttribute("listaventa", listaventa);
                      request.setAttribute("numeroSerie", numeroSerie);                     
                      break;
-                 case "GenerarVenta":
-                    // int idVenta = ventaDAO.generarIdventa();
-                     //int idClientev = cliente.getIdCliente();
-                     int idClientev = 18;
+                 case "GenerarVenta":                    
+                     int idClientev = cliente.getIdCliente();
                      int idEmpleado = 1;
                      //String numeroSerie = request.getParameter("NroSerie"); numeroSerie
-                     Date fecha = new Date(2023, 11, 14);
-                     //double monto = Double.parseDouble(request.getParameter("txtTotal"));
-                        
+                     Date fecha = new Date(123, 11, 14);                   
                      String numeroSerieact= Integer.toString(numero_serie2);
                      String estado = "1";
                      Venta venta = new Venta(idClientev, idEmpleado, numeroSerieact, fecha, totalPagar, estado);
-                     ventaDAO.guardarVenta(venta);
-                     break;                    
-                     
+                     ventaDAO.guardarVenta(venta);                     
+                     break;            
                  default:
-                    numero_serie2 = ventaDAO.generarSerie();              
-                    numeroSerie = ventaDAO.convertirNumeroSerie(numero_serie2); 
-                    request.setAttribute("numeroSerie", numeroSerie);
-                            
-                    request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
+                    //numero_serie2 = ventaDAO.generarSerie();
+                     int abc = ventaDAO.generarSerie();                    
+                     numeroSerie = ventaDAO.convertirNumeroSerie(abc); 
+                     request.setAttribute("numeroSerie", numeroSerie); 
+                  
+                         
+                                                            
+                   request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
              }
              request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
          }        

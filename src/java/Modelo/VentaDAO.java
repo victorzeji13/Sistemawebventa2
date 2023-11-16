@@ -14,8 +14,7 @@ public class VentaDAO {
     private static final String SQL_INSERT_DETALLE = "INSERT INTO detalleventa(idVentas , idProducto , Cantidad , Precioventa) VALUES (? , ? , ? , ?)";
           
     String numero;
-    int dato;
-    
+            
     public int guardarVenta (Venta venta){
         
         Conexion conexion = new Conexion();
@@ -85,7 +84,7 @@ public class VentaDAO {
         Connection conn;
         PreparedStatement pstmt;
         ResultSet rs;
-        int numeroSerie = 0;       
+        int numeroSerie = 0; 
         try {
             conn = conexion.getConnection();
             pstmt = conn.prepareStatement(sql);
@@ -99,32 +98,31 @@ public class VentaDAO {
         return numeroSerie;
     }
      public String convertirNumeroSerie(int numeroSerie){
-                       
-       dato= numeroSerie+1;
+      int dato= numeroSerie+1;
         
-       if((this.dato>=10000000)&&(this.dato<100000000)){
-            numero=""+this.dato;
+       if((dato>=10000000)&&(dato<100000000)){
+            numero=""+dato;
         }        
-        else if((this.dato>=1000000)&&(this.dato<10000000)){
-            numero="0"+this.dato;
+        else if((dato>=1000000)&&(dato<10000000)){
+            numero="0"+dato;
         }        
-        else if((this.dato>=100000)&&(this.dato<1000000)){
-            numero="00"+this.dato;
+        else if((dato>=100000)&&(dato<1000000)){
+            numero="00"+dato;
         }
-        else if((this.dato>=10000)&&(this.dato<100000)){
-            numero="000"+this.dato;
+        else if((dato>=10000)&&(dato<100000)){
+            numero="000"+dato;
         }
-        else if((this.dato>=1000)&&(this.dato<10000)){
-            numero="0000"+this.dato;
+        else if((dato>=1000)&&(dato<10000)){
+            numero="0000"+dato;
         }
-        else if((this.dato>=100)&&(this.dato<1000)){
-            numero="00000"+this.dato;
+        else if((dato>=100)&&(dato<1000)){
+            numero="00000"+dato;
         }
-        else if((this.dato>=10)&&(this.dato<100)){
-            numero="000000"+this.dato;
+        else if((dato>=10)&&(dato<100)){
+            numero="000000"+dato;
         }
-        else if(this.dato<10){
-            numero="00000000"+this.dato;
+        else if(dato<10){
+            numero="00000000"+dato;
         }
        return numero;
      }
