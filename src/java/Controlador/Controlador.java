@@ -47,7 +47,7 @@ public class Controlador extends HttpServlet {
     int idempleado;
     private double totalPagar;
     String numeroSerie;
-    int numero_serie2;
+    int abc;
     
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -150,14 +150,14 @@ public class Controlador extends HttpServlet {
                      int idEmpleado = 1;
                      //String numeroSerie = request.getParameter("NroSerie"); numeroSerie
                      Date fecha = new Date(123, 11, 14);                   
-                     String numeroSerieact= Integer.toString(numero_serie2);
+                     String numeroSerieact= Integer.toString(abc);
                      String estado = "1";
                      Venta venta = new Venta(idClientev, idEmpleado, numeroSerieact, fecha, totalPagar, estado);
                      ventaDAO.guardarVenta(venta);                     
                      break;            
                  default:
                     //numero_serie2 = ventaDAO.generarSerie();
-                     int abc = ventaDAO.generarSerie();                    
+                     abc = ventaDAO.generarSerie();                    
                      numeroSerie = ventaDAO.convertirNumeroSerie(abc); 
                      request.setAttribute("numeroSerie", numeroSerie); 
                   
