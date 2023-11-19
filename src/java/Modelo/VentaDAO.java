@@ -12,15 +12,13 @@ public class VentaDAO {
     private static final String SQL_IDVENTA = "select max(idVentas) from ventas";
     private static final String SQL_INSERT = "INSERT INTO ventas (idCliente , idEmpleado , NumeroSerie , Fechaventa , Monto , Estado) VALUES(? , ? , ? , ? , ?, ?)";
     private static final String SQL_INSERT_DETALLE = "INSERT INTO detalleventa(idVentas , idProducto , Cantidad , Precioventa) VALUES (? , ? , ? , ?)";
-          
-    String numero;
-            
+    private static final String SQL_STOCK_PRODUCTO = "SELECT Stock from producto WHERE idProducto = ?";
+              
     public int guardarVenta (Venta venta){
         
         Conexion conexion = new Conexion();
         Connection conn;
         PreparedStatement pstm;
-        ResultSet rs;
         int registros = 0;
         try {
             conn = conexion.getConnection();
@@ -44,7 +42,6 @@ public class VentaDAO {
         Conexion conexion = new Conexion();
         Connection conn;
         PreparedStatement pstm;
-        ResultSet rs;
         int registros = 0;
         try {
             conn = conexion.getConnection();
@@ -58,6 +55,29 @@ public class VentaDAO {
         }
         
         return registros;
+    }
+    
+    public int stockProducto(int idProducto , int cantidad){
+        
+        Conexion conexion = new Conexion();
+        Connection conn;
+        PreparedStatement pstm;
+        ResultSet rs;
+        int registros = 0;
+        int stock=0;
+        try {
+            conn = conexion.getConnection();
+            pstm = conn.prepareStatement(SQL_STOCK_PRODUCTO);
+            pstm.setInt(1, idProducto);
+            rs = pstm.executeQuery();
+            while (rs.next()) {                
+                registros =rs.getInt("Stock");
+            }
+        } catch (Exception e) {
+        }
+        
+        stock = registros - cantidad;
+        return stock;
     }
     
     public int generarIdventa(){
@@ -98,32 +118,11 @@ public class VentaDAO {
         return numeroSerie;
     }
      public String convertirNumeroSerie(int numeroSerie){
-      int dato= numeroSerie+1;
-        
-       if((dato>=10000000)&&(dato<100000000)){
-            numero=""+dato;
-        }        
-        else if((dato>=1000000)&&(dato<10000000)){
-            numero="0"+dato;
-        }        
-        else if((dato>=100000)&&(dato<1000000)){
-            numero="00"+dato;
-        }
-        else if((dato>=10000)&&(dato<100000)){
-            numero="000"+dato;
-        }
-        else if((dato>=1000)&&(dato<10000)){
-            numero="0000"+dato;
-        }
-        else if((dato>=100)&&(dato<1000)){
-            numero="00000"+dato;
-        }
-        else if((dato>=10)&&(dato<100)){
-            numero="000000"+dato;
-        }
-        else if(dato<10){
-            numero="00000000"+dato;
-        }
-       return numero;
+      
+         String numero;
+         int dato= numeroSerie+1;
+         numero = "" + dato;
+         return numero ;
+      
      }
 }

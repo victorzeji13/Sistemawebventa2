@@ -33,7 +33,13 @@ public class Venta {
         this.cantidad = cantidad;
         this.subtotal = subtotal;
     }
-    
+
+    public Venta(int idVentas, int idProducto, int cantidad ,double precio) {
+        this.idVentas = idVentas;
+        this.idProducto = idProducto;
+        this.cantidad = cantidad;
+        this.precio = precio;        
+    }   
     
     public Venta(int idVentas, int idCliente, int idEmpleado, String numeroSerie, Date fechaVenta, double monto, String estado) {
         // se creo el constructor
