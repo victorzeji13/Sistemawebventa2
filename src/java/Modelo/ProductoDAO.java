@@ -8,7 +8,8 @@ import java.sql.ResultSet;
 
 public class ProductoDAO {
     
-    private static final String SQL_CONSULTA_IDPRODUCTO = "SELECT * FROM producto WHERE idProducto = ?"; 
+    private static final String SQL_CONSULTA_IDPRODUCTO = "SELECT * FROM producto WHERE idProducto = ?";
+    private static final String SQL_STOCK_PRODUCTO = "UPDATE producto SET Stock=? WHERE idProducto = ?";
     
     public Producto buscarProducto(int idProducto){
         Conexion conexion = new Conexion();
@@ -34,6 +35,24 @@ public class ProductoDAO {
         } catch (Exception e) {
         }
         return producto;
+    }
+    
+     public int stockProducto(int cantidad, int idProducto){
+        
+        Conexion conexion = new Conexion();
+        Connection conn;
+        PreparedStatement pstm;
+        int registros = 0;
+        try {
+            conn = conexion.getConnection();
+            pstm = conn.prepareStatement(SQL_STOCK_PRODUCTO);
+            pstm.setInt(1, cantidad);
+            pstm.setInt(2, idProducto);
+            registros = pstm.executeUpdate();
+            
+        } catch (Exception e) {
+        }
+           return registros;
     }
     
 }

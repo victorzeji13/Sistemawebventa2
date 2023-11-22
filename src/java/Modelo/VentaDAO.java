@@ -12,8 +12,7 @@ public class VentaDAO {
     private static final String SQL_IDVENTA = "select max(idVentas) from ventas";
     private static final String SQL_INSERT = "INSERT INTO ventas (idCliente , idEmpleado , NumeroSerie , Fechaventa , Monto , Estado) VALUES(? , ? , ? , ? , ?, ?)";
     private static final String SQL_INSERT_DETALLE = "INSERT INTO detalleventa(idVentas , idProducto , Cantidad , Precioventa) VALUES (? , ? , ? , ?)";
-    private static final String SQL_STOCK_PRODUCTO = "UPDATE producto SET Stock=? WHERE idProducto = ?";
-              
+                  
     public int guardarVenta (Venta venta){
         
         Conexion conexion = new Conexion();
@@ -55,27 +54,8 @@ public class VentaDAO {
         }
         
         return registros;
-    }
-    
-    public int stockProducto(int cantidad, int idProducto){
-        
-        Conexion conexion = new Conexion();
-        Connection conn;
-        PreparedStatement pstm;
-        ResultSet rs;
-        int registros = 0;
-        try {
-            conn = conexion.getConnection();
-            pstm = conn.prepareStatement(SQL_STOCK_PRODUCTO);
-            pstm.setInt(1, cantidad);
-            pstm.setInt(2, idProducto);
-            registros = pstm.executeUpdate();
-            
-        } catch (Exception e) {
-        }
-           return registros;
-    }
-    
+    }   
+   
     public int generarIdventa(){
         Conexion conexion = new Conexion();
         Connection conn;

@@ -127,8 +127,7 @@ public class Controlador extends HttpServlet {
                      request.setAttribute("cliente", cliente);
                      request.setAttribute("numeroSerie", numeroSerie);                     
                      break;   
-                 case "Agregar":
-                     request.setAttribute("cliente", cliente);
+                 case "Agregar":                     
                      totalPagar = 0.0 ;
                      item = item + 1;
                      cod = producto.getIdProducto();
@@ -136,34 +135,34 @@ public class Controlador extends HttpServlet {
                      precio = Double.parseDouble(request.getParameter("precio"));
                      cantidad = Integer.parseInt(request.getParameter("cantidad"));
                      subtotal = precio * cantidad;                     
-                     Venta ventaagregar = new Venta(item, cod, descripcion, precio, cantidad, subtotal);
-                     listaventa.add(ventaagregar);
-                     request.setAttribute("listaventa", listaventa);
+                     Venta ventaagregar = new Venta(item, cod, descripcion, precio, cantidad, subtotal);                     
+                     listaventa.add(ventaagregar);                     
                      for (int i = 0; i < listaventa.size() ; i++) {
                          totalPagar = totalPagar + listaventa.get(i).getSubtotal();
                      }
-                     request.setAttribute("totalPagar", totalPagar);
-                     
+                     request.setAttribute("listaventa", listaventa);
+                     request.setAttribute("cliente", cliente);
+                     request.setAttribute("totalPagar", totalPagar);                     
                      request.setAttribute("numeroSerie", numeroSerie);                     
                      break;
                  case "GenerarVenta":                    
                      int idClientev = cliente.getIdCliente();
                      int idEmpleado = 1;
                      Date fecha = new Date(123, 11, 14);
-                     String estado = "1";
-                     Venta venta = new Venta(idClientev, idEmpleado, numeroSerie, fecha, totalPagar, estado);
-                     ventaDAO.guardarVenta(venta);
-                     
+                     String estado = "1";                 
                      //guardar detalleventa
                      int idVenta =ventaDAO.generarIdventa();
-                     for (int i = 0; i < listaventa.size(); i++) {
+                     for (int i = 0; i < listaventa.size(); i++) { 
+                         Venta venta = new Venta(idClientev, idEmpleado, numeroSerie, fecha, totalPagar, estado);
+                          ventaDAO.guardarVenta(venta);
                          int codigoProductodetalle = listaventa.get(i).getIdProducto();
                          int cantidadProductodetalle = listaventa.get(i).getCantidad();
                          double precioProductodetalle = listaventa.get(i).getPrecio();
+                         producto = productoDAO.buscarProducto(codigoProductodetalle);
                          int cantidadStock = producto.getStock()- cantidadProductodetalle;
-                         ventaDAO.stockProducto(cantidadStock, codigoProductodetalle);
-                    Venta ventadetalle = new Venta(idVenta, codigoProductodetalle, cantidadProductodetalle, precioProductodetalle);
-                    ventaDAO.guardarVentadetalle(ventadetalle);
+                         productoDAO.stockProducto(cantidadStock, codigoProductodetalle);                        
+                         Venta ventadetalle = new Venta(idVenta, codigoProductodetalle, cantidadProductodetalle, precioProductodetalle);
+                         ventaDAO.guardarVentadetalle(ventadetalle);
                      }
                      break;            
                  default:
