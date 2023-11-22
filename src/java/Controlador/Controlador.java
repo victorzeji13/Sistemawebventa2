@@ -123,9 +123,9 @@ public class Controlador extends HttpServlet {
                      int codigoProducto = Integer.parseInt(request.getParameter("codigoProducto"));
                      producto = productoDAO.buscarProducto(codigoProducto);
                      request.setAttribute("producto", producto);
-                     request.setAttribute("listaventa", listaventa);
+                     //request.setAttribute("listaventa", listaventa);
                      request.setAttribute("cliente", cliente);
-                     request.setAttribute("numeroSerie", numeroSerie);
+                     request.setAttribute("numeroSerie", numeroSerie);                     
                      break;   
                  case "Agregar":
                      request.setAttribute("cliente", cliente);
@@ -138,11 +138,12 @@ public class Controlador extends HttpServlet {
                      subtotal = precio * cantidad;                     
                      Venta ventaagregar = new Venta(item, cod, descripcion, precio, cantidad, subtotal);
                      listaventa.add(ventaagregar);
+                     request.setAttribute("listaventa", listaventa);
                      for (int i = 0; i < listaventa.size() ; i++) {
                          totalPagar = totalPagar + listaventa.get(i).getSubtotal();
                      }
                      request.setAttribute("totalPagar", totalPagar);
-                     request.setAttribute("listaventa", listaventa);
+                     
                      request.setAttribute("numeroSerie", numeroSerie);                     
                      break;
                  case "GenerarVenta":                    
@@ -151,7 +152,7 @@ public class Controlador extends HttpServlet {
                      Date fecha = new Date(123, 11, 14);
                      String estado = "1";
                      Venta venta = new Venta(idClientev, idEmpleado, numeroSerie, fecha, totalPagar, estado);
-                     ventaDAO.guardarVenta(venta);  
+                     ventaDAO.guardarVenta(venta);
                      
                      //guardar detalleventa
                      int idVenta =ventaDAO.generarIdventa();
@@ -159,6 +160,8 @@ public class Controlador extends HttpServlet {
                          int codigoProductodetalle = listaventa.get(i).getIdProducto();
                          int cantidadProductodetalle = listaventa.get(i).getCantidad();
                          double precioProductodetalle = listaventa.get(i).getPrecio();
+                         int cantidadStock = producto.getStock()- cantidadProductodetalle;
+                         ventaDAO.stockProducto(cantidadStock, codigoProductodetalle);
                     Venta ventadetalle = new Venta(idVenta, codigoProductodetalle, cantidadProductodetalle, precioProductodetalle);
                     ventaDAO.guardarVentadetalle(ventadetalle);
                      }

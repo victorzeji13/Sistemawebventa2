@@ -50,7 +50,7 @@
                                 <input type="number" name="cantidad"  class="form-control">                          
                             </div>
                             <div class="col-sm-3">
-                                <input type="text" name="stock" class="form-control" placeholder="Stock">
+                                <input type="text" value="${producto.stock}" name="stock" class="form-control" placeholder="Stock">
                             </div>
                         </div>
                     </div>
