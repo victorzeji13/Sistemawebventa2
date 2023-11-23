@@ -135,7 +135,8 @@ public class Controlador extends HttpServlet {
                      precio = Double.parseDouble(request.getParameter("precio"));
                      cantidad = Integer.parseInt(request.getParameter("cantidad"));
                      subtotal = precio * cantidad;                     
-                     Venta ventaagregar = new Venta(item, cod, descripcion, precio, cantidad, subtotal);                     
+                     Venta ventaagregar = new Venta(item, cod, descripcion, precio, cantidad, subtotal); 
+                     //guarda todo
                      listaventa.add(ventaagregar);                     
                      for (int i = 0; i < listaventa.size() ; i++) {
                          totalPagar = totalPagar + listaventa.get(i).getSubtotal();
@@ -162,8 +163,9 @@ public class Controlador extends HttpServlet {
                          int cantidadStock = producto.getStock()- cantidadProductodetalle;
                          productoDAO.stockProducto(cantidadStock, codigoProductodetalle);                        
                          Venta ventadetalle = new Venta(idVenta, codigoProductodetalle, cantidadProductodetalle, precioProductodetalle);
-                         ventaDAO.guardarVentadetalle(ventadetalle);
+                         ventaDAO.guardarVentadetalle(ventadetalle);                         
                      }
+                     listaventa.clear();
                      break;            
                  default:
                     
