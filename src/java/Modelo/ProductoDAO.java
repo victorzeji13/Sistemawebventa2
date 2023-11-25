@@ -10,6 +10,27 @@ public class ProductoDAO {
     
     private static final String SQL_CONSULTA_IDPRODUCTO = "SELECT * FROM producto WHERE idProducto = ?";
     private static final String SQL_STOCK_PRODUCTO = "UPDATE producto SET Stock=? WHERE idProducto = ?";
+    private static final String SQL_INSERT_PRODUCTO ="INSERT INTO producto (Nombres , Precio , Stock ,Estado) VALUES (? , ? , ? ,?)";
+    
+   public int insertarProducto(Producto producto){
+       Conexion conexion = new Conexion();
+       Connection conn;
+       PreparedStatement pstm;
+       int registros = 0;
+       try {
+           conn = conexion.getConnection();
+           pstm = conn.prepareStatement(SQL_INSERT_PRODUCTO);
+           pstm.setString(1, producto.getNombres());
+           pstm.setDouble(2, producto.getPrecio());
+           pstm.setInt(3, producto.getStock());
+           pstm.setString(4, producto.getEstado());
+           registros = pstm.executeUpdate();
+           
+       } catch (Exception e) {
+       }
+        return registros;        
+      
+   }
     
     public Producto buscarProducto(int idProducto){
         Conexion conexion = new Conexion();

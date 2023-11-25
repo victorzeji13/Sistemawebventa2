@@ -24,7 +24,7 @@
                         <div class="form-group d-flex">
                             <div class="col-sm-6 d-flex">
                                 <input type="text" value="${cliente.dni}" name="codigoCliente" class="form-control" placeholder="Codigo"> 
-                                <input type="submit" name="accion" value="Buscar"  class="btn btn-outline-info">  
+                                <input type="submit" name="accion" value="BuscarCliente"  class="btn btn-outline-info">  
                             </div>
                             <div class="col-sm-6">
                                 <input type="text" value="${cliente.nombres}" name="nombreCliente" placeholder="Datos Cliente" class="form-control">                
@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group d-flex">
                             <div class="col-sm-6 ">
-                                <input type="text" name="precio" class="form-control" placeholder="S/0.00">                              
+                                <input type="text" value="${producto.precio}" name="precio" class="form-control" placeholder="S/0.00">                              
                             </div>
                             <div class="col-sm-3">
                                 <input type="number" name="cantidad"  class="form-control">                          

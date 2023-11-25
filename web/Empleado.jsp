@@ -18,8 +18,7 @@
             <div class="card col-sm-4">
                 <div class="card-body">
                     <form action="Controlador?menu=Empleado" method="post">
-                        <div
-                            <div class="form-group">
+                        <div class="form-group">
                             <label>Dni</label>
                             <input type="text" value="${empleado.dni}" name="txtDni" class="form-control">
                         </div>

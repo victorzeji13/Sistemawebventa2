@@ -98,8 +98,7 @@ public class Controlador extends HttpServlet {
                      empleadoDao.eliminar(empleado);
                      List<Empleado> listaEmpleado4 = empleadoDao.listarEmpleado();
                      request.setAttribute("listaEmpleado", listaEmpleado4);                     
-                     break;
-                     
+                     break;                     
                  default:
                      throw new AssertionError();
              }
@@ -109,11 +108,24 @@ public class Controlador extends HttpServlet {
              request.getRequestDispatcher("Clientes.jsp").forward(request, response);
          }
          if(menu.equals("Producto")){
+             switch (accion) {
+                 case "Agregar":
+                     String nombreProducto = request.getParameter("txtNombre");
+                     double precioProducto = Double.parseDouble(request.getParameter("txtPrecio"));
+                     int stockProducto = Integer.parseInt(request.getParameter("txtStock"));
+                     String estadoProducto = request.getParameter("txtEstado");
+                     Producto productoInsertar = new Producto(nombreProducto, precioProducto, stockProducto, estadoProducto);
+                     productoDAO.insertarProducto(productoInsertar);
+                     break;
+                 default:
+//                     throw new AssertionError();
+                     request.getRequestDispatcher("Producto.jsp").forward(request, response);                   
+             }
              request.getRequestDispatcher("Producto.jsp").forward(request, response);
          }
          if(menu.equals("NuevaVenta")){
              switch (accion) {
-                 case "Buscar":
+                 case "BuscarCliente":
                      String dni = request.getParameter("codigoCliente");
                      cliente = clienteDao.listarCliente(dni);
                      request.setAttribute("cliente", cliente);
@@ -123,7 +135,7 @@ public class Controlador extends HttpServlet {
                      int codigoProducto = Integer.parseInt(request.getParameter("codigoProducto"));
                      producto = productoDAO.buscarProducto(codigoProducto);
                      request.setAttribute("producto", producto);
-                     //request.setAttribute("listaventa", listaventa);
+                     request.setAttribute("listaventa", listaventa);
                      request.setAttribute("cliente", cliente);
                      request.setAttribute("numeroSerie", numeroSerie);                     
                      break;   
@@ -144,7 +156,8 @@ public class Controlador extends HttpServlet {
                      request.setAttribute("listaventa", listaventa);
                      request.setAttribute("cliente", cliente);
                      request.setAttribute("totalPagar", totalPagar);                     
-                     request.setAttribute("numeroSerie", numeroSerie);                     
+                     request.setAttribute("numeroSerie", numeroSerie);  
+                    
                      break;
                  case "GenerarVenta":                    
                      int idClientev = cliente.getIdCliente();
@@ -153,9 +166,9 @@ public class Controlador extends HttpServlet {
                      String estado = "1";                 
                      //guardar detalleventa
                      int idVenta =ventaDAO.generarIdventa();
-                     for (int i = 0; i < listaventa.size(); i++) { 
-                         Venta venta = new Venta(idClientev, idEmpleado, numeroSerie, fecha, totalPagar, estado);
+                     Venta venta = new Venta(idClientev, idEmpleado, numeroSerie, fecha, totalPagar, estado);
                           ventaDAO.guardarVenta(venta);
+                     for (int i = 0; i < listaventa.size(); i++) {                         
                          int codigoProductodetalle = listaventa.get(i).getIdProducto();
                          int cantidadProductodetalle = listaventa.get(i).getCantidad();
                          double precioProductodetalle = listaventa.get(i).getPrecio();
@@ -166,9 +179,11 @@ public class Controlador extends HttpServlet {
                          ventaDAO.guardarVentadetalle(ventadetalle);                         
                      }
                      listaventa.clear();
+                     serie = ventaDAO.generarSerie(); 
+                     numeroSerie = ventaDAO.convertirNumeroSerie(serie);
+                     request.setAttribute("numeroSerie", numeroSerie);
                      break;            
-                 default:
-                    
+                 default:                     
                      serie = ventaDAO.generarSerie();                    
                      numeroSerie = ventaDAO.convertirNumeroSerie(serie); 
                      request.setAttribute("numeroSerie", numeroSerie);                  

@@ -50,7 +50,6 @@ public class EmpleadoDAO {
         Conexion conexion = new Conexion();
         Connection conn;
         PreparedStatement pstm;
-        ResultSet rs;
         int registros = 0;
         try {
             conn = conexion.getConnection();
