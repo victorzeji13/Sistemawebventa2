@@ -47,7 +47,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>  
-                            <th scope="col">ID</th>
+                            <th scope="col">CODIGO</th>
                             <th scope="col">DNI</th>
                             <th scope="col">NOMBRES</th>
                             <th scope="col">TELEFONO</th>

@@ -38,6 +38,7 @@ public class Controlador extends HttpServlet {
     Producto producto = new Producto();
     List<Venta> listaventa = new ArrayList<>();
     VentaDAO ventaDAO = new VentaDAO();
+    List<Producto> listaProducto = new ArrayList<>();
     int item;
     int cod;
     String descripcion;
@@ -48,6 +49,7 @@ public class Controlador extends HttpServlet {
     private double totalPagar;
     String numeroSerie;
     int serie;
+    int codigoProductolista;
     
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -109,6 +111,10 @@ public class Controlador extends HttpServlet {
          }
          if(menu.equals("Producto")){
              switch (accion) {
+                 case "Listar":
+                    listaProducto = productoDAO.listarProducto();
+                    request.setAttribute("listaProducto", listaProducto);
+                    break;                    
                  case "Agregar":
                      String nombreProducto = request.getParameter("txtNombre");
                      double precioProducto = Double.parseDouble(request.getParameter("txtPrecio"));
@@ -116,10 +122,23 @@ public class Controlador extends HttpServlet {
                      String estadoProducto = request.getParameter("txtEstado");
                      Producto productoInsertar = new Producto(nombreProducto, precioProducto, stockProducto, estadoProducto);
                      productoDAO.insertarProducto(productoInsertar);
+                     break; 
+                 case "Editar":
+                     codigoProductolista = Integer.parseInt(request.getParameter("codigoProducto"));
+                     producto = productoDAO.buscarProducto(codigoProductolista);
+                     request.setAttribute("producto", producto);
+                     request.setAttribute("listaProducto", listaProducto);
                      break;
-                 default:
-//                     throw new AssertionError();
-                     request.getRequestDispatcher("Producto.jsp").forward(request, response);                   
+                 case "Actualizar":
+                     String nombreprod = request.getParameter("txtNombre");
+                     double precioprod = Double.parseDouble(request.getParameter("txtPrecio"));
+                     int stockprod = Integer.parseInt(request.getParameter("txtStock"));
+                     String estadopro = request.getParameter("txtEstado");
+                     Producto producto1 = new Producto(codigoProductolista, nombreprod, precioprod, stockprod, estadopro);
+                     productoDAO.actualizarProducto(producto1); 
+                     break;
+                   default:
+                     throw new AssertionError();                   
              }
              request.getRequestDispatcher("Producto.jsp").forward(request, response);
          }
