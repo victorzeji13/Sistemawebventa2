@@ -15,6 +15,7 @@ public class ProductoDAO {
     private static final String SQL_INSERT_PRODUCTO ="INSERT INTO producto (Nombres , Precio , Stock ,Estado) VALUES (? , ? , ? ,?)";
     private static final String SQL_CONSULTA_PRODUCTOS ="SELECT * FROM producto"; 
     private static final String SQL_UPDATE_PRODUCTO = "UPDATE producto SET Nombres = ? ,Precio = ? , Stock = ? , Estado = ? WHERE idProducto = ?";
+    private static final String SQL_DELETE_PRODUCTO = "DELETE FROM producto WHERE idProducto = ?";    
     
   public List<Producto> listarProducto(){
       Conexion conexion = new Conexion();
@@ -105,6 +106,20 @@ public class ProductoDAO {
         } catch (Exception e) {
         }
         return producto;
+    }
+    public void eliminarProducto(Producto producto){
+        Conexion conexion = new Conexion();
+        Connection conn;
+        PreparedStatement pstm;
+        ResultSet rs;
+        
+        try {
+            conn = conexion.getConnection();
+            pstm = conn.prepareStatement(SQL_DELETE_PRODUCTO);
+            pstm.setInt(1, producto.getIdProducto());
+            pstm.executeUpdate();
+        } catch (Exception e) {
+        }
     }
     
      public int stockProducto(int cantidad, int idProducto){

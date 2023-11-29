@@ -122,6 +122,8 @@ public class Controlador extends HttpServlet {
                      String estadoProducto = request.getParameter("txtEstado");
                      Producto productoInsertar = new Producto(nombreProducto, precioProducto, stockProducto, estadoProducto);
                      productoDAO.insertarProducto(productoInsertar);
+                     listaProducto = productoDAO.listarProducto();
+                     request.setAttribute("listaProducto", listaProducto);
                      break; 
                  case "Editar":
                      codigoProductolista = Integer.parseInt(request.getParameter("codigoProducto"));
@@ -129,13 +131,22 @@ public class Controlador extends HttpServlet {
                      request.setAttribute("producto", producto);
                      request.setAttribute("listaProducto", listaProducto);
                      break;
-                 case "Actualizar":
+                 case "Actualizar":                     
                      String nombreprod = request.getParameter("txtNombre");
                      double precioprod = Double.parseDouble(request.getParameter("txtPrecio"));
                      int stockprod = Integer.parseInt(request.getParameter("txtStock"));
                      String estadopro = request.getParameter("txtEstado");
-                     Producto producto1 = new Producto(codigoProductolista, nombreprod, precioprod, stockprod, estadopro);
-                     productoDAO.actualizarProducto(producto1); 
+                     Producto productoact = new Producto(codigoProductolista, nombreprod, precioprod, stockprod, estadopro);
+                     productoDAO.actualizarProducto(productoact);  
+                     listaProducto = productoDAO.listarProducto();
+                     request.setAttribute("listaProducto", listaProducto);
+                     break;
+                 case "Eliminar":
+                     int codigoProducto = Integer.parseInt(request.getParameter("codigoProducto"));
+                     Producto productoEliminar = new Producto(codigoProducto);                   
+                     productoDAO.eliminarProducto(productoEliminar);
+                     listaProducto = productoDAO.listarProducto();
+                     request.setAttribute("listaProducto", listaProducto);
                      break;
                    default:
                      throw new AssertionError();                   

@@ -61,7 +61,7 @@
                                 <td>${pro.getEstado()}</td>
                                 <td>
                                     <a class="btn btn-warning" href="Controlador?menu=Producto&accion=Editar&codigoProducto=${pro.getIdProducto()}">Editar</a>
-                                    <a class="btn btn-danger">Eliminar</a>
+                                    <a class="btn btn-danger"  href="Controlador?menu=Producto&accion=Eliminar&codigoProducto=${pro.getIdProducto()}">Eliminar</a>
                                 </td>
                             </tr>
                             </c:forEach>
