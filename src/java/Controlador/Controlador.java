@@ -56,7 +56,8 @@ public class Controlador extends HttpServlet {
             throws ServletException, IOException {
          String menu = request.getParameter("menu");
          String accion = request.getParameter("accion");
-         if(menu.equals("Principal")){
+         
+        if(menu.equals("Principal")){
              request.getRequestDispatcher("Principal.jsp").forward(request, response);
          } 
          if(menu.equals("Empleado")){
@@ -152,6 +153,17 @@ public class Controlador extends HttpServlet {
                      throw new AssertionError();                   
              }
              request.getRequestDispatcher("Producto.jsp").forward(request, response);
+         }
+         if(menu.equals("Reporte")){
+             switch (accion) {
+                 case "Listar":
+                     List<Venta> listaVentas = ventaDAO.listarVentas();
+                     request.setAttribute("listaVentas", listaVentas);
+                     break;
+                 default:
+                     throw new AssertionError();
+             }
+             request.getRequestDispatcher("Reporte.jsp").forward(request, response);
          }
          if(menu.equals("NuevaVenta")){
              switch (accion) {
@@ -249,9 +261,9 @@ public class Controlador extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {  
         processRequest(request, response);
-    }
+        }
 
     /**
      * Returns a short description of the servlet.

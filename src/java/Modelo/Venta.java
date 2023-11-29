@@ -7,9 +7,12 @@ public class Venta {
 
           
     private int idVentas;
+    private String nombreCliente;
+    private String nombreEmpleado;
     private int idCliente;
     private int idEmpleado;
     private String numeroSerie;
+    private int numeroSeriep;
     private Date fechaVenta;
     private double monto;
     private String estado;
@@ -18,13 +21,36 @@ public class Venta {
     private String descripcion;
     private double precio;
     private int cantidad;
-    private double subtotal;
-   
+    private double subtotal;    
     
     public Venta(){
         
-    }   
+    }
 
+    public Venta(int idVentas, int numeroSeriep, double monto) {
+        this.idVentas = idVentas;
+        this.numeroSeriep = numeroSeriep;
+        this.monto = monto;
+    }   
+    
+
+    public Venta(int idVentas, String nombreCliente, String nombreEmpleado, String numeroSerie, double monto) {
+        this.idVentas = idVentas;
+        this.nombreCliente = nombreCliente;
+        this.nombreEmpleado = nombreEmpleado;
+        this.numeroSerie = numeroSerie;
+        this.monto = monto;
+    }  
+
+    public Venta(int idVentas, String nombreCliente, String nombreEmpleado, int numeroSeriep, double monto) {
+        this.idVentas = idVentas;
+        this.nombreCliente = nombreCliente;
+        this.nombreEmpleado = nombreEmpleado;
+        this.numeroSeriep = numeroSeriep;
+        this.monto = monto;
+    }   
+    
+    
     public Venta(int item, int idProducto, String descripcion, double precio, int cantidad, double subtotal) {
         this.item = item;
         this.idProducto = idProducto;
@@ -32,8 +58,8 @@ public class Venta {
         this.precio = precio;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
-    }
-
+    }   
+    
     public Venta(int idVentas, int idProducto, int cantidad ,double precio) {
         this.idVentas = idVentas;
         this.idProducto = idProducto;
@@ -60,7 +86,7 @@ public class Venta {
         this.fechaVenta = fechaVenta;
         this.monto = monto;
         this.estado = estado;
-    }
+    }      
 
     /**
      * @return the idVentas
@@ -243,5 +269,30 @@ public class Venta {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-       
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getNombreEmpleado() {
+        return nombreEmpleado;
+    }
+
+    public void setNombreEmpleado(String nombreEmpleado) {
+        this.nombreEmpleado = nombreEmpleado;
+    }
+
+    public int getNumeroSeriep() {
+        return numeroSeriep;
+    }
+
+    public void setNumeroSeriep(int numeroSeriep) {
+        this.numeroSeriep = numeroSeriep;
+    }
+    
+    
 }

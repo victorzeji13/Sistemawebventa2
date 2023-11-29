@@ -5,6 +5,8 @@ import config.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VentaDAO {
     
@@ -12,7 +14,36 @@ public class VentaDAO {
     private static final String SQL_IDVENTA = "select max(idVentas) from ventas";
     private static final String SQL_INSERT = "INSERT INTO ventas (idCliente , idEmpleado , NumeroSerie , Fechaventa , Monto , Estado) VALUES(? , ? , ? , ? , ?, ?)";
     private static final String SQL_INSERT_DETALLE = "INSERT INTO detalleventa(idVentas , idProducto , Cantidad , Precioventa) VALUES (? , ? , ? , ?)";
-                  
+    private static final String SQL_LISTAR_VENTA = "SELECT ventas.idVentas, cliente.Nombres, empleado.Nombres, ventas.NumeroSerie, ventas.Monto FROM ventas INNER JOIN cliente ON ventas.idCliente = cliente.idCliente INNER JOIN empleado ON ventas.idEmpleado = empleado.idEmpleado ORDER BY idVentas ASC";
+    
+    public List<Venta> listarVentas(){
+        
+        Conexion conexion = new Conexion();
+        Connection conn;
+        PreparedStatement pstm;
+        ResultSet rs;
+        List<Venta> listaVentas = new ArrayList<>();
+        Venta venta = null;
+        try {
+            conn = conexion.getConnection();
+            pstm = conn.prepareStatement(SQL_LISTAR_VENTA);
+            rs = pstm.executeQuery();
+            while (rs.next()) {                
+                int ventas = rs.getInt("idVentas");
+                String nombreCliente = rs.getString("Nombres");
+                String nombreEmpleado = rs.getString("Nombres");
+                int numeroSerie = rs.getInt("NumeroSerie");
+                double monto = rs.getDouble("Monto");
+                venta = new Venta(ventas, nombreCliente , nombreEmpleado , numeroSerie, monto);
+                listaVentas.add(venta);
+            }
+            
+        } catch (Exception e) {
+        }
+        return listaVentas;
+    }
+    
+    
     public int guardarVenta (Venta venta){
         
         Conexion conexion = new Conexion();
