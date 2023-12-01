@@ -39,6 +39,7 @@ public class Controlador extends HttpServlet {
     List<Venta> listaventa = new ArrayList<>();
     VentaDAO ventaDAO = new VentaDAO();
     List<Producto> listaProducto = new ArrayList<>();
+    List<Cliente> listaCliente = new ArrayList<>();
     int item;
     int cod;
     String descripcion;
@@ -108,6 +109,14 @@ public class Controlador extends HttpServlet {
              request.getRequestDispatcher("Empleado.jsp").forward(request, response);
          }
          if(menu.equals("Cliente")){
+             switch (accion) {
+                 case "Listar":
+                     listaCliente = clienteDao.listarClientes();
+                     request.setAttribute("listaCliente", listaCliente);
+                     break;
+                 default:
+                     throw new AssertionError();
+             }
              request.getRequestDispatcher("Clientes.jsp").forward(request, response);
          }
          if(menu.equals("Producto")){

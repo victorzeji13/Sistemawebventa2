@@ -14,7 +14,7 @@ public class Cliente {
 
     public Cliente() {
         
-    }
+    }      
 
     public Cliente(int idCliente, String dni, String nombres, String direccion, String estado) {
         //inicializar variables del constructor
@@ -24,14 +24,6 @@ public class Cliente {
         this.direccion = direccion;
         this.estado = estado;
     }
-
-    public Cliente(String dni, String nombres, String direccion, String estado) {
-        this.dni = dni;
-        this.nombres = nombres;
-        this.direccion = direccion;
-        this.estado = estado;
-    }
-
     /**
      * @return the idCliente
      */
