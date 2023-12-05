@@ -51,7 +51,7 @@ public class Controlador extends HttpServlet {
     String numeroSerie;
     int serie;
     int codigoProductolista;
-    
+    int codigoCliente;    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -114,6 +114,40 @@ public class Controlador extends HttpServlet {
                      listaCliente = clienteDao.listarClientes();
                      request.setAttribute("listaCliente", listaCliente);
                      break;
+                 case "Agregar":
+                     String dni = request.getParameter("txtDni");
+                     String nombre = request.getParameter("txtNombre");
+                     String direccion = request.getParameter("txtDireccion");
+                     String estado = request.getParameter("txtEstado");
+                     Cliente cliente = new Cliente(dni, nombre, direccion, estado);
+                     clienteDao.guardarClientes(cliente);
+                     listaCliente = clienteDao.listarClientes();
+                     request.setAttribute("listaCliente", listaCliente);
+                     break;  
+                 case "Editar":
+                     codigoCliente = Integer.parseInt(request.getParameter("idCliente"));
+                     cliente = clienteDao.listarIdCliente(codigoCliente);
+                     request.setAttribute("cliente",cliente);
+                     listaCliente = clienteDao.listarClientes();
+                     request.setAttribute("listaCliente", listaCliente);
+                     break;
+                 case "Eliminar":
+                      int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+                      Cliente clienteEliminar = new Cliente(idCliente);
+                      clienteDao.eliminarCliente(clienteEliminar);
+                      listaCliente = clienteDao.listarClientes();
+                      request.setAttribute("listaCliente", listaCliente);
+                     break;   
+                 case "Actualizar":
+                      String dniact = request.getParameter("txtDni");
+                      String nombreact = request.getParameter("txtNombre");
+                      String direccionact = request.getParameter("txtDireccion");
+                      String estadoact = request.getParameter("txtEstado");
+                      Cliente clienteActualizar = new Cliente( codigoCliente , dniact, nombreact, direccionact, estadoact);
+                      clienteDao.actualizarCliente(clienteActualizar);                     
+                      listaCliente = clienteDao.listarClientes();
+                      request.setAttribute("listaCliente", listaCliente);
+                      break;
                  default:
                      throw new AssertionError();
              }

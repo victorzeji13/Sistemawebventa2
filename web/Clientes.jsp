@@ -20,20 +20,22 @@
                     <form action="Controlador?menu=Cliente" method="post">
                         <div class="form-group">
                             <label>Dni</label>
-                            <input type="text" name="txtDni" class="form-control">
+                            <input type="text" value="${cliente.dni}" name="txtDni" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Nombres</label>
-                            <input type="text" name="txtNombre" class="form-control">
+                            <input type="text" value="${cliente.nombres}" name="txtNombre" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Direccion</label>
-                            <input type="text" name="txtDireccion" class="form-control">
+                            <input type="text" value="${cliente.direccion}" name="txtDireccion" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Estado</label>
-                            <input type="text" name="txtEstado" class="form-control">
+                            <input type="text" value="${cliente.estado}" name="txtEstado" class="form-control">
                         </div>
+                        <input type="submit" name="accion" value="Agregar" class="btn btn-info">
+                        <input type="submit" name="accion" value="Actualizar" class="btn btn-success"> 
                     </form>
                 </div>
             </div>
@@ -56,6 +58,10 @@
                             <td>${cliente.getNombres()}</td>
                             <td>${cliente.getDireccion()}</td>
                             <td>${cliente.getEstado()}</td>
+                            <td>
+                                <a class="btn btn-warning" href="Controlador?menu=Cliente&accion=Editar&idCliente=${cliente.getIdCliente()}">Editar</a>
+                                <a class="btn btn-danger" href="Controlador?menu=Cliente&accion=Eliminar&idCliente=${cliente.getIdCliente()}">Eliminar</a>
+                            </td>
                         </tr>
                         </c:forEach>
                     </tbody>
