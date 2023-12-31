@@ -10,7 +10,7 @@
         <div class="container mt-4 col-lg-4">
             <div class="card col-sm-10">
                 <div class="card-body">
-                    <form action="Validar" method="post">
+                    <form action="Controlador" method="POST">
                         <div class="form-group text-center">
                             <h3>Login</h3>
                             <img src="img/logo.jpg" alt="70" width="170"/>

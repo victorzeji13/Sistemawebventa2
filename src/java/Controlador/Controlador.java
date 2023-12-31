@@ -54,9 +54,22 @@ public class Controlador extends HttpServlet {
     int codigoCliente;    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {        
          String menu = request.getParameter("menu");
          String accion = request.getParameter("accion");
+         
+        if(accion.equalsIgnoreCase("Ingresar")){
+            String usuario = request.getParameter("txtuser");
+            String password = request.getParameter("txtpass");
+            empleado= empleadoDao.validar(usuario, password);
+            if(empleado.getUser() != null){
+                request.setAttribute("usuario", empleado);
+                request.getRequestDispatcher("Principal.jsp").forward(request, response);
+            }
+            else{
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        }        
          
         if(menu.equals("Principal")){
              request.getRequestDispatcher("Principal.jsp").forward(request, response);
