@@ -32,6 +32,7 @@ public class Controlador extends HttpServlet {
 
     EmpleadoDAO empleadoDao = new EmpleadoDAO();
     Empleado empleado = new Empleado();
+    Empleado empleadoprueba = new Empleado();
     ClienteDAO clienteDao = new ClienteDAO();
     Cliente cliente = new Cliente();
     ProductoDAO productoDAO = new ProductoDAO();
@@ -61,9 +62,9 @@ public class Controlador extends HttpServlet {
         if(accion.equalsIgnoreCase("Ingresar")){
             String usuario = request.getParameter("txtuser");
             String password = request.getParameter("txtpass");
-            empleado= empleadoDao.validar(usuario, password);
-            if(empleado.getUser() != null){
-                request.setAttribute("usuario", empleado);
+            empleadoprueba= empleadoDao.validar(usuario, password);
+            if(empleadoprueba.getUser() != null){
+                request.setAttribute("usuario", empleadoprueba);
                 request.getRequestDispatcher("Principal.jsp").forward(request, response);
             }
             else{
@@ -259,7 +260,7 @@ public class Controlador extends HttpServlet {
                      break;
                  case "GenerarVenta":                    
                      int idClientev = cliente.getIdCliente();
-                     int idEmpleado = 1;
+                     int idEmpleado = empleadoprueba.getIdEmpleado();
                      Date fecha = new Date(123, 11, 14);
                      String estado = "1";                 
                      //guardar detalleventa

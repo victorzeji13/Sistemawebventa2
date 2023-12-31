@@ -28,12 +28,12 @@ public class VentaDAO {
             conn = conexion.getConnection();
             pstm = conn.prepareStatement(SQL_LISTAR_VENTA);
             rs = pstm.executeQuery();
-            while (rs.next()) {                
-                int ventas = rs.getInt("idVentas");
-                String nombreCliente = rs.getString("Nombres");
-                String nombreEmpleado = rs.getString("Nombres");
-                int numeroSerie = rs.getInt("NumeroSerie");
-                double monto = rs.getDouble("Monto");
+            while (rs.next()) {  
+                 int ventas = rs.getInt(1);
+                String nombreCliente = rs.getString(2);
+                String nombreEmpleado = rs.getString(3);
+                int numeroSerie = rs.getInt(4);
+                double monto = rs.getDouble(5);
                 venta = new Venta(ventas, nombreCliente , nombreEmpleado , numeroSerie, monto);
                 listaVentas.add(venta);
             }
