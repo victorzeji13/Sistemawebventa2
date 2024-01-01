@@ -10,7 +10,7 @@ import java.util.List;
 
 public class VentaDAO {
     
-    private static final String sql = "select max(NumeroSerie) from ventas";
+    private static final String SQL_SERIE = "select max(NumeroSerie) from ventas";
     private static final String SQL_IDVENTA = "select max(idVentas) from ventas";
     private static final String SQL_INSERT = "INSERT INTO ventas (idCliente , idEmpleado , NumeroSerie , Fechaventa , Monto , Estado) VALUES(? , ? , ? , ? , ?, ?)";
     private static final String SQL_INSERT_DETALLE = "INSERT INTO detalleventa(idVentas , idProducto , Cantidad , Precioventa) VALUES (? , ? , ? , ?)";
@@ -114,7 +114,7 @@ public class VentaDAO {
         int numeroSerie = 0; 
         try {
             conn = conexion.getConnection();
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(SQL_SERIE);
             rs = pstmt.executeQuery();
             while (rs.next()) {     
                 numeroSerie = rs.getInt(1);
